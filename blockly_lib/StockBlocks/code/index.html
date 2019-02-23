@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="google" value="notranslate">
   <title>StockBlocks</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="style.css">
   <script src="/storage.js"></script>
   <script src="../../blockly_compressed.js"></script>
@@ -17,11 +18,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script defer src="graph.js"></script>
   
+  <script type="text/javascript" src="minAjax.js"></script>
+  
 </head>
 <body>
 
-  <div id="graph-container">
+  <div id="graph-container" class="left-side">
         <canvas id="graph"></canvas>
+  </div>
+  
+  <div id="menu" class="left-side w3-card">
+      <h4> Select Backtest Dates </h4>
+      
+        <b>Start Date:</b> <input id="start" class="w3-input" type="date" min="2018-02-25"><br>
+        <b>End Date:</b> <input id="end" class="w3-input" type="date" max="2019-02-21"><br>
+        <b>Cash:</b> <input id="end" class="w3-input" type="number" min="1" value="10000"><br>
+        <b>Code:</b><br>
+        <samp id="code">
+            Code Sample
+        </samp>
+        <br>
+        <button onclick="startBacktest();" class="w3-btn w3-white w3-border w3-border-green w3-round-xlarge">
+            Start Backtest
+        </button>
+      
   </div>
 
   <table width="50%" height="100%">

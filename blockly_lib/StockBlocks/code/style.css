@@ -164,9 +164,16 @@ button {
 }
 
 #graph-container {
+  display: none;
+}
+
+.left-side{
   margin: 40px 40px 40px 5px;
   display: inline;
   float: right;
   width: 44%;
-  border: 3px solid black;
+}
+
+#code {
+    white-space: pre-wrap;
 }

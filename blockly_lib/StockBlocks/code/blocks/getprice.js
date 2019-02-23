@@ -224,7 +224,7 @@ Blockly.Python['buy'] = function(block) {
     var dropdown_stock = JSON.stringify(block.getFieldValue('STOCK'));
     var number_quantity = block.getFieldValue('QUANTITY');
     var value_stocks = Blockly.Python.valueToCode(block, 'STOCKS', Blockly.Python.ORDER_ATOMIC);
-    var code = 'buy('  + dropdown_stock + ',' + number_quantity + ')';
+    var code = "buy("  + dropdown_stock + "," + number_quantity + ")\n";
     return code;
 }
 
@@ -232,12 +232,12 @@ Blockly.Python['sell'] = function(block) {
     var dropdown_stock = JSON.stringify(block.getFieldValue('STOCK'));
     var number_quantity = block.getFieldValue('QUANTITY');
     var value_stocks = Blockly.Python.valueToCode(block, 'STOCKS', Blockly.Python.ORDER_ATOMIC);
-    var code = 'sell('  + dropdown_stock + ',' + number_quantity + ')';
+    var code = "sell("  + dropdown_stock + "," + number_quantity + ")\n";
     return code;
 }
 
 Blockly.Python['portfoliocash'] = function(block) {
   // TODO: Assemble Python into code variable.
-  var code = 'portfolio_cash()';
+  var code = "portfolio_cash()";
   return [code, Blockly.Python.ORDER_NONE];
 };

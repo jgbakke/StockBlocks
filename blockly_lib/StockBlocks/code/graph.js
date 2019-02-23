@@ -1,3 +1,4 @@
+var SERVER_API = "http://localhost:8100";
 
 function writeGraph(timestamps, equities){
 
@@ -59,3 +60,26 @@ function writeGraph(timestamps, equities){
 
 
 writeGraph([...Array(150).keys()], Array.from({length: 150}, () => (Math.random() * 50000 + 1000000)));
+
+function startBacktest(){
+
+    alert(document.getElementById("code").innerHTML);
+
+    minAjax({
+        url: SERVER_API,//request URL
+        type: "GET",//Request type GET/POST
+        //Send Data in form of GET/POST
+        data:{
+          start: document.getElementById("start").value,
+          end: document.getElementById("end").value,
+          cash: document.getElementById("cash").value,
+          code: document.getElementById("code").innerHTML
+        },
+        //CALLBACK FUNCTION with RESPONSE as argument
+        success: function(data){
+          alert(data);
+        }
+
+    })
+
+};

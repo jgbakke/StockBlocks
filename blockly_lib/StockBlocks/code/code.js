@@ -533,7 +533,7 @@ Code.runJS = function() {
 };
 
 Code.runPY = function(){
-    alert(Blockly.Python.workspaceToCode(Code.workspace));
+    document.getElementById("code").innerHTML = (Blockly.Python.workspaceToCode(Code.workspace));
 }
 
 /**
