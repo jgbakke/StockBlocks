@@ -162,3 +162,11 @@ button {
 .run {
   background-position: -42px 0px;
 }
+
+#graph-container {
+  margin: 40px 40px 40px 5px;
+  display: inline;
+  float: right;
+  width: 44%;
+  border: 3px solid black;
+}
