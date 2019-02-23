@@ -63,11 +63,14 @@ writeGraph([...Array(150).keys()], Array.from({length: 150}, () => (Math.random(
 
 function startBacktest(){
 
-    alert(document.getElementById("code").innerHTML);
+    if(!document.getElementById("code").innerHTML){
+        alert("You must compile your code first");
+        return;
+    }
 
     minAjax({
         url: SERVER_API,//request URL
-        type: "GET",//Request type GET/POST
+        type: "POST",//Request type GET/POST
         //Send Data in form of GET/POST
         data:{
           start: document.getElementById("start").value,

@@ -30,13 +30,11 @@
   <div id="menu" class="left-side w3-card">
       <h4> Select Backtest Dates </h4>
       
-        <b>Start Date:</b> <input id="start" class="w3-input" type="date" min="2018-02-25"><br>
-        <b>End Date:</b> <input id="end" class="w3-input" type="date" max="2019-02-21"><br>
+        <b>Start Date:</b> <input id="start" class="w3-input" type="date" min="2018-02-25" value="2019-01-05"><br>
+        <b>End Date:</b> <input id="end" class="w3-input" type="date" max="2019-02-21" value="2019-02-05"><br>
         <b>Cash:</b> <input id="end" class="w3-input" type="number" min="1" value="10000"><br>
         <b>Code:</b><br>
-        <samp id="code">
-            Code Sample
-        </samp>
+        <samp id="code"></samp>
         <br>
         <button onclick="startBacktest();" class="w3-btn w3-white w3-border w3-border-green w3-round-xlarge">
             Start Backtest
@@ -66,14 +64,14 @@
             <td class="tabmin">&nbsp;</td>
             <td id="tab_xml" class="taboff">XML</td>
             <td class="tabmax">
+              <button id="runButton" class="w3-button w3-white w3-border w3-border-red w3-round w3-medium" title="...">
+                Compile
+              </button>
               <button id="trashButton" class="notext" title="...">
                 <img src='../../media/1x1.gif' class="trash icon21">
               </button>
               <button id="linkButton" class="notext" title="...">
                 <img src='../../media/1x1.gif' class="link icon21">
-              </button>
-              <button id="runButton" class="notext primary" title="...">
-                <img src='../../media/1x1.gif' class="run icon21">
               </button>
             </td>
           </tr>
