@@ -75,6 +75,47 @@ Blockly.defineBlocksWithJsonArray([{
   "helpUrl": ""
   },
   
+  {
+  "type": "percent_change",
+  "message0": "% Change of %1 %2",
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "STOCK",
+      "options": stocks
+    },
+    {
+      "type": "input_value",
+      "name": "NAME"
+    }
+  ],
+  "output": "Number",
+  "colour": 20,
+  "tooltip": "Get the Daily Percent Change of the Stock",
+  "helpUrl": ""
+  },
+  
+  
+  {
+  "type": "vwap",
+  "message0": "VWAP of %1 %2",
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "STOCK",
+      "options": stocks
+    },
+    {
+      "type": "input_value",
+      "name": "NAME"
+    }
+  ],
+  "output": "Number",
+  "colour": 20,
+  "tooltip": "Get the Volume Weighted Average Price",
+  "helpUrl": ""
+  },
+  
                                   
   {
   "type": "buy",
@@ -132,6 +173,7 @@ Blockly.defineBlocksWithJsonArray([{
   "helpUrl": ""
   },
   
+  
   {
   "type": "portfoliocash",
   "message0": "Cash in Account",
@@ -146,21 +188,35 @@ Blockly.defineBlocksWithJsonArray([{
 Blockly.Python['getprice'] = function(block) {
      var dropdown_stock = JSON.stringify(block.getFieldValue('STOCK'));
      var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
-     var code = "getPrice(" + dropdown_stock + ")";
+     var code = "get_price(" + dropdown_stock + ")";
      return [code, Blockly.Python.ORDER_NONE];
  };
 
 Blockly.Python['volume'] = function(block) {
      var dropdown_stock = JSON.stringify(block.getFieldValue('STOCK'));
      var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
-     var code = "getVolume(" + dropdown_stock + ")";
+     var code = "get_volume(" + dropdown_stock + ")";
      return [code, Blockly.Python.ORDER_NONE];
  };
 
  Blockly.Python['quantity'] = function(block) {
      var dropdown_stock = JSON.stringify(block.getFieldValue('STOCK'));
      var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
-     var code = "stockQuantity(" + dropdown_stock + ")";
+     var code = "stock_quantity(" + dropdown_stock + ")";
+     return [code, Blockly.Python.ORDER_NONE];
+ };
+
+ Blockly.Python['percent_change'] = function(block) {
+     var dropdown_stock = JSON.stringify(block.getFieldValue('STOCK'));
+     var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
+     var code = "get_percent_change(" + dropdown_stock + ")";
+     return [code, Blockly.Python.ORDER_NONE];
+ };
+
+ Blockly.Python['vwap'] = function(block) {
+     var dropdown_stock = JSON.stringify(block.getFieldValue('STOCK'));
+     var value_name = Blockly.Python.valueToCode(block, 'NAME', Blockly.Python.ORDER_ATOMIC);
+     var code = "get_vwap(" + dropdown_stock + ")";
      return [code, Blockly.Python.ORDER_NONE];
  };
 
