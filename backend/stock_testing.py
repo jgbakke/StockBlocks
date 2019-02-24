@@ -31,6 +31,14 @@ def print(log):
 def parse_day(date_str):
     return datetime.datetime( *( [int(i) for i in date_str.split("-")]) )
 
+def get_sma(ticker, period):
+    sum = get_price(ticker)
+    tempDate = Globals.currentDay
+    for i in range(period - 1):
+        tempDate = prev_day(tempDate)
+        sum += float(get_data(ticker, date_to_string(tempDate)))
+    return (sum/period)
+
 def cache_data():
     for ticker in Globals.available_stocks:
         URL = "https://api.iextrading.com/1.0/stock/{}/chart/1y".format(ticker)
@@ -130,3 +138,11 @@ def total_portfolio_value():
 
 def portfolio_cash():
     return Globals.equity
+
+def peek_next_day(date):
+    temp = date + datetime.timedelta(days=1)
+    while ((temp.strftime('%A') == 'Saturday') or (temp.strftime('%A') == 'Sunday')):
+        temp += datetime.timedelta(days=1)
+    return temp
+
+
