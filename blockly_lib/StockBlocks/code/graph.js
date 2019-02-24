@@ -1,4 +1,4 @@
-var SERVER_API = "http://localhost:8100";
+var SERVER_API = "http://127.0.0.1:5000/backtest";
 
 function writeGraph(timestamps, equities){
 
