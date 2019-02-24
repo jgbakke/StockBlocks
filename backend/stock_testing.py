@@ -86,7 +86,7 @@ def changeCash(amount):
     Globals.equity += amount
     return Globals.equity
 
-def stockQuantity(stock):
+def stock_quantity(stock):
     if stock in Globals.stocks:
         return Globals.stocks[stock]
     else:
@@ -106,7 +106,7 @@ def buy(ticker, quantity):
     total_price = get_price(ticker)*quantity
     if(Globals.equity >= total_price):
         #add stock quantity to global stock dict
-        if(stockQuantity(ticker) == 0):
+        if(stock_quantity(ticker) == 0):
             Globals.stocks[ticker] = quantity;
         else:
             Globals.stocks[ticker] = Globals.stocks[ticker] + quantity
@@ -122,7 +122,7 @@ def sell(ticker, quantity):
 
     quantity = int(quantity)
 
-    if(quantity <= stockQuantity(ticker)):
+    if(quantity <= stock_quantity(ticker)):
         total_price = quantity * get_price(ticker)
         changeCash(total_price)
         Globals.stocks[ticker] = Globals.stocks[ticker] - quantity
