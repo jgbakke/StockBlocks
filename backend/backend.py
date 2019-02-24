@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import jsonify
 from flask_cors import CORS, cross_origin
 from stock_testing import start_backtest
 import datetime
@@ -16,9 +17,7 @@ def form_example():
     cash = request.form.get("cash")
     code = request.form.get("code")
     
-    start_backtest(start, end, cash, code)
-    
-    return "{}".format(start)
+    return jsonify(start_backtest(start, end, cash, code))
 
 if __name__ == "__main__":
     app.run()
