@@ -1,7 +1,7 @@
 stocks = {}
 daily_values = {}
 equity = 1000000
-trades = [{}]
+trades = []
 equities = [{}]
 startDay = None #Jan 7 2019
 currentDay = None

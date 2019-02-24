@@ -11,36 +11,53 @@ def start_backtest(start, end, cash, code):
     Globals.endDay = parse_day(end)
     Globals.currentDay = parse_day(start) # We cannot do = startDay because that would pass by ref
     Globals.equity = cash
+    
+    cache_data()
 
     backtest_loop(code)
 
 def parse_day(date_str):
     return datetime.datetime( *( [int(i) for i in date_str.split("-")]) )
 
+def cache_data():
+    for ticker in Globals.available_stocks:
+        URL = "https://api.iextrading.com/1.0/stock/{}/chart/1y".format(ticker)
+        data = (requests.get(URL)).json()
+        Globals.available_stocks[ticker] = data
+
 def backtest_loop(code):
-    pass
+
+    while Globals.currentDay < Globals.endDay:
+
+        if not isWeekend(Globals.currentDay):
+            # The Czar Bomba of important functions
+            # Exec the compiled python code
+            exec(code)
+            Globals.equities[date_to_string(Globals.currentDay)] = total_portfolio_value()
+
+        next_day()
+
+    print("Finished")
+    return
 
 def get_data(ticker, date, tag="close"):
-    URL = "https://api.iextrading.com/1.0/stock/{}/chart/1y".format(ticker)
-    data = (requests.get(URL)).json()
-    for i in data:
+    for i in Globals.available_stocks[ticker]:
         if(i.get("date") == date):
             return i.get(tag)
-    return {}
+    return None
 
 def date_to_string(date_time):
     return date_time.strftime('%Y-%m-%d')
 
 def isWeekend(date_time):
-    print(date_time.strftime('%A'))
-    if((date_time.strftime('%A') == 'Saturday') | (date_time.strftime('%A') == 'Sunday')):
+    if((date_time.strftime('%A') == 'Saturday') or (date_time.strftime('%A') == 'Sunday')):
         return True
     else:
         return False
 
 def next_day():
     Globals.currentDay += datetime.timedelta(days=1)
-    while((Globals.currentDay.strftime('%A') == 'Saturday') | (Globals.currentDay.strftime('%A') == 'Sunday')):
+    while((Globals.currentDay.strftime('%A') == 'Saturday') or (Globals.currentDay.strftime('%A') == 'Sunday')):
         Globals.currentDay += datetime.timedelta(days=1)
 
 def get_price(ticker):
@@ -65,6 +82,9 @@ def stockQuantity(stock):
     else:
         return 0;
 
+def record_trade(ticker, quantity, buy = True):
+    order_type = "Bought" if buy else "Sold"
+    trades.append(dict(date_to_string(Globals.currentDay), "{} {}".format(order_type, quantity) ))
 
 def buy(ticker, quantity):
     total_price = get_price(ticker)*quantity
@@ -74,8 +94,10 @@ def buy(ticker, quantity):
             Globals.stocks[ticker] = quantity;
         else:
             Globals.stocks[ticker] = Globals.stocks[ticker] + quantity
+        
         #remove money from equity
         changeCash(-1*total_price)
+        record_trade(ticker, quantity, buy)
         return True
     else:
         return False
@@ -85,6 +107,7 @@ def sell(ticker, quantity):
         total_price = quantity * get_price(ticker)
         changeCash(total_price)
         Globals.stocks[ticker] = Globals.stocks[ticker] - quantity
+        record_trade(ticker, quantity, sell)
         return True
     else:
         return False

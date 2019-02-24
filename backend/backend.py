@@ -3,6 +3,7 @@ from flask import request
 from flask_cors import CORS, cross_origin
 from stock_testing import start_backtest
 import datetime
+import os
 
 app = Flask(__name__)
 CORS(app)
