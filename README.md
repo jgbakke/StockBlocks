@@ -23,7 +23,7 @@ Are you interested in learning algotrading but never touched code? This is the p
 This project uses the following other open-source projects: Blockly, Closure, W3.CSS, Charts.js
 
 ## Contributor Guide
-[LINK TO CONTRIBUTING.md]
+Please see the Contributor Guide here: https://github.com/jgbakke/StockBlocks/blob/master/Contributing.md
 
 ## License 
 The MIT Licence
