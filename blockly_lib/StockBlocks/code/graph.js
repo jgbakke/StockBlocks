@@ -33,17 +33,10 @@ function writeGraph(timestamps, equities){
 
     options: {
         scales: {
-            yAxes: [{
-                ticks: {
-                    min: 920000,
-                    max: 1080000
-                }
-            }],
             
             xAxes: [{
                 ticks: {
-                    autoSkip: true,
-                    maxTicksLimit: 20
+                    autoSkip: true
                 }
             }]
         },
@@ -59,7 +52,25 @@ function writeGraph(timestamps, equities){
 };
 
 
-writeGraph([...Array(150).keys()], Array.from({length: 150}, () => (Math.random() * 50000 + 1000000)));
+//writeGraph([...Array(150).keys()], Array.from({length: 150}, () => (Math.random() * 50000 + 1000000)));
+
+function showData(data){
+    var labels = [];
+    var points = [];
+    
+    data = JSON.parse(data);
+    console.log(data);
+    
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("graph-container").style.display = "block";
+    
+    for(var date in data.equities){
+        labels.push(date);
+        points.push(data.equities[date]);
+    }
+    
+    writeGraph(labels, points);
+}
 
 function startBacktest(){
 
@@ -80,7 +91,7 @@ function startBacktest(){
         },
         //CALLBACK FUNCTION with RESPONSE as argument
         success: function(data){
-          alert(data);
+          showData(data);
         }
 
     })

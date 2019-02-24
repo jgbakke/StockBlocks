@@ -9,7 +9,7 @@ def start_backtest(start, end, cash, code):
     Globals.startDay = parse_day(start)
     Globals.endDay = parse_day(end)
     Globals.currentDay = parse_day(start) # We cannot do = startDay because that would pass by ref
-    Globals.equity = cash
+    Globals.equity = float(cash)
     
     cache_data()
 
@@ -18,15 +18,8 @@ def start_backtest(start, end, cash, code):
     ending_data = dict()
     ending_data["equities"] = Globals.equities
     ending_data["trades"] = Globals.trades
-    ending_data["logs"] = Globals.logs
 
     return ending_data
-
-def print(log):
-    d = dict()
-    d[date_to_string(Globals.currentDay)] = log
-
-    Globals.logs.append(d)
 
 def parse_day(date_str):
     return datetime.datetime( *( [int(i) for i in date_str.split("-")]) )
@@ -49,11 +42,10 @@ def backtest_loop(code):
 
     while Globals.currentDay < Globals.endDay:
 
-        if not isWeekend(Globals.currentDay):
+        if (get_price("AAPL") is not None) and (not isWeekend(Globals.currentDay)):
             # Exec the compiled python code
             exec(code)
             Globals.equities[date_to_string(Globals.currentDay)] = total_portfolio_value()
-
         next_day()
 
     return
@@ -102,9 +94,15 @@ def stockQuantity(stock):
 
 def record_trade(ticker, quantity, buy = True):
     order_type = "Bought" if buy else "Sold"
-    trades.append(dict(date_to_string(Globals.currentDay), "{} {}".format(order_type, quantity) ))
+    
+    d = dict()
+    d[date_to_string(Globals.currentDay)] = "{} {}".format(order_type, quantity)
+    
+    Globals.trades.append(d)
 
 def buy(ticker, quantity):
+    quantity = int(quantity)
+
     total_price = get_price(ticker)*quantity
     if(Globals.equity >= total_price):
         #add stock quantity to global stock dict
@@ -121,6 +119,8 @@ def buy(ticker, quantity):
         return False
 
 def sell(ticker, quantity):
+    quantity = int(quantity)
+
     if(quantity <= stockQuantity(ticker)):
         total_price = quantity * get_price(ticker)
         changeCash(total_price)
