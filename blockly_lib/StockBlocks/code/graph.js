@@ -10,9 +10,6 @@ function writeGraph(timestamps, equities){
     var border = borderColors[+(equities[equities.length-1] > equities[0])];
     var background = bgColors[+(equities[equities.length-1] > equities[0])];
     
-    console.log(background);
-    console.log(border);
-
 
     var ctx = document.getElementById('graph').getContext('2d');
     chart = new Chart(ctx, {
@@ -66,7 +63,6 @@ function showData(data){
     var points = [];
     
     var data = JSON.parse(data);
-    console.log(data);
     
     document.getElementById("menu").style.display = "none";
     document.getElementById("graph-container").style.display = "block";
@@ -76,7 +72,18 @@ function showData(data){
         points.push(data.equities[date]);
     }
     
+    console.log(data.trades);
+    
     writeGraph(labels, points);
+    
+    for(var trade in data.trades){
+        var key = Object.keys(data.trades[trade]);
+    
+        var el = document.createElement("LI");
+        var txt = document.createTextNode(key + ": " + data.trades[trade][key]);
+        el.appendChild(txt);
+        document.getElementById("trades").appendChild(el);
+    }
 }
 
 function startLive(){
@@ -99,7 +106,6 @@ function startLive(){
                     "amount": cashAmount
                 },
                 success: function(data){
-                  console.log("Capital One Response: ", data);
                   alert("Initial deposit received! Now just sit back and make some money!");
                 }
 
