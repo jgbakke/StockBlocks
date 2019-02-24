@@ -24,7 +24,32 @@
 <body>
 
   <div id="graph-container" class="left-side">
-        <canvas id="graph"></canvas>
+        <canvas id="graph"></canvas><br>
+        <table class="w3-table w3-striped">
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Points</th>
+            </tr>
+            <tr>
+              <td>Jill</td>
+              <td>Smith</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>Eve</td>
+              <td>Jackson</td>
+              <td>94</td>
+            </tr>
+            <tr>
+              <td>Adam</td>
+              <td>Johnson</td>
+              <td>67</td>
+            </tr>
+        </table><br>
+        <button onclick="hideGraph();" class="w3-btn w3-green w3-round">
+            Return to Backtest
+        </button>
   </div>
   
   <div id="menu" class="left-side w3-card">
@@ -36,8 +61,12 @@
         <b>Code:</b><br>
         <samp id="code"></samp>
         <br>
-        <button onclick="startBacktest();" class="w3-btn w3-white w3-border w3-border-green w3-round-xlarge">
+        <button onclick="startBacktest();" class="w3-btn w3-green w3-round">
             Start Backtest
+        </button>
+        
+        <button onclick="startLive();" class="w3-btn w3-green w3-round w3-hover-yellow">
+            Go Live!
         </button>
       
   </div>
@@ -51,7 +80,6 @@
         </h1>
       </td>
       <td class="farSide">
-        <select id="languageMenu"></select>
       </td>
     </tr>
     <tr>

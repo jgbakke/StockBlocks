@@ -76,7 +76,7 @@ def get_price(ticker):
 def get_volume(ticker):
     return get_data(ticker,date_to_string(Globals.currentDay),"volume")
 
-def get_changePercent(ticker):
+def get_percent_change(ticker):
     return get_data(ticker,date_to_string(Globals.currentDay),"changePercent")
 
 def get_vwap(ticker):
@@ -96,7 +96,7 @@ def record_trade(ticker, quantity, buy = True):
     order_type = "Bought" if buy else "Sold"
     
     d = dict()
-    d[date_to_string(Globals.currentDay)] = "{} {}".format(order_type, quantity)
+    d[date_to_string(Globals.currentDay)] = "{} {} {}".format(order_type, quantity, ticker)
     
     Globals.trades.append(d)
 
@@ -119,13 +119,14 @@ def buy(ticker, quantity):
         return False
 
 def sell(ticker, quantity):
+
     quantity = int(quantity)
 
     if(quantity <= stockQuantity(ticker)):
         total_price = quantity * get_price(ticker)
         changeCash(total_price)
         Globals.stocks[ticker] = Globals.stocks[ticker] - quantity
-        record_trade(ticker, quantity, sell)
+        record_trade(ticker, quantity, False)
         return True
     else:
         return False

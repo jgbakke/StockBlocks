@@ -1,4 +1,5 @@
 var SERVER_API = "http://127.0.0.1:5000/backtest";
+var chart = null;
 
 function writeGraph(timestamps, equities){
 
@@ -14,7 +15,7 @@ function writeGraph(timestamps, equities){
 
 
     var ctx = document.getElementById('graph').getContext('2d');
-    var chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
 
@@ -52,13 +53,19 @@ function writeGraph(timestamps, equities){
 };
 
 
-//writeGraph([...Array(150).keys()], Array.from({length: 150}, () => (Math.random() * 50000 + 1000000)));
+function hideGraph(){
+    document.getElementById("menu").style.display = "block";
+    document.getElementById("graph-container").style.display = "none";
+    chart.destroy();
+    chart.reset();
+    chart = null;
+}
 
 function showData(data){
     var labels = [];
     var points = [];
     
-    data = JSON.parse(data);
+    var data = JSON.parse(data);
     console.log(data);
     
     document.getElementById("menu").style.display = "none";
@@ -70,6 +77,37 @@ function showData(data){
     }
     
     writeGraph(labels, points);
+}
+
+function startLive(){
+    var cashAmount = document.getElementById("cash").value;
+
+    if(confirm("Are you sure you want to go live? Your Capital One account will be billed $" + cashAmount + ".")){
+    
+            alert("Going Live!");
+            startBacktest();
+        
+            minAjax({
+                url: "http://api.reimaginebanking.com/accounts/5bc1e6e6322fa06b67793d92/transfers?key=991ca7f76e70b90f44fc6b59f8b0d1e8",
+                type: "POST",
+                data:{
+                    "medium": "balance",
+                    "payee_id": "5bc1e6e6322fa06b67793d92",
+                    "transaction_date": "02-24-2019",
+                    "status": "pending",
+                    "description": "Transfering money into a Live Trading account",
+                    "amount": cashAmount
+                },
+                success: function(data){
+                  console.log("Capital One Response: ", data);
+                  alert("Initial deposit received! Now just sit back and make some money!");
+                }
+
+            });
+        
+        
+        
+    }
 }
 
 function startBacktest(){

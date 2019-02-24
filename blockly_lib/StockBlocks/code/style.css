@@ -6,7 +6,6 @@ body {
   background-color: #fff;
   font-family: sans-serif;
   margin: 0;
-  overflow: hidden;
 }
 
 .farSide {
@@ -176,4 +175,6 @@ button {
 
 #code {
     white-space: pre-wrap;
+    max-height:50px;
+    overflow-y: scroll;
 }
